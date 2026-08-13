@@ -646,7 +646,7 @@ export const projects = [
   // TV's Full Credit List, so the work is still documented on the site.
   // Give it a thumbnail and drop this flag to promote it to a real card.
   //
-  // Category, company and role are inferred and need confirming.
+  // Category, company and role confirmed by Cameron, 13 Aug 2026.
   {
     id: "you-got-this",
     season: "SEASON 1",

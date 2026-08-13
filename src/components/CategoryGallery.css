@@ -1,0 +1,99 @@
+/* One continuous exhibition rather than a stack of panels. There is no
+   rule, no border and no step in background colour between sections —
+   the rooms are separated by distance and a slow shift in tone, the way
+   galleries in a building are. */
+/* True black, not a raised surface.
+   The canvases are transparent wherever nothing is drawn, so whatever
+   this paints *is* the background of every environment. A #101010 panel
+   showed up behind the film as a grey field and read as a wall — the one
+   thing these rooms must not have. */
+.galleries {
+  position: relative;
+  padding: clamp(3rem, 6vw, 5rem) 0 clamp(2.5rem, 5vw, 4rem);
+  background: #000;
+}
+
+.galleries__header {
+  max-width: var(--max-width);
+  margin: 0 auto clamp(2.25rem, 4.5vw, 3.5rem);
+  padding: 0 var(--section-pad-x);
+}
+
+.galleries__heading {
+  margin-top: 0.5rem;
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  color: var(--color-text);
+}
+
+/* The gap between rooms is what separates them. Generous, so each
+   environment arrives on its own rather than butting against the last. */
+.category-section {
+  max-width: var(--max-width);
+  margin: 0 auto clamp(3.5rem, 7vw, 6rem);
+  padding: 0 var(--section-pad-x);
+  scroll-margin-top: 5rem;
+}
+
+.category-section--env {
+  /* environments run to the full width of the viewport; only their
+     heading is held to the text measure */
+  max-width: none;
+  padding: 0;
+}
+
+.category-section:last-child {
+  margin-bottom: 0;
+}
+
+.category-section__header {
+  max-width: var(--max-width);
+  margin: 0 auto 1.15rem;
+  padding: 0 var(--section-pad-x);
+}
+
+.category-section__title-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.category-section__title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  color: var(--color-text);
+}
+
+/* Count and credit-list button share the right-hand end of the title
+   row, so they read as one line of section metadata. */
+.category-section__meta {
+  display: flex;
+  align-items: baseline;
+  gap: 1.1rem;
+}
+
+.category-section__count {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  white-space: nowrap;
+}
+
+/* Secondary to the environment by design: small, dim, and narrow enough
+   that it reads as a caption rather than a paragraph of body copy. */
+.category-section__intro {
+  max-width: 58ch;
+  margin-top: 0.6rem;
+  font-size: 0.86rem;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--color-text-faint);
+  text-wrap: pretty;
+}
+
+@media (max-width: 640px) {
+  .category-section__intro {
+    font-size: 0.82rem;
+    line-height: 1.7;
+  }
+}

@@ -1,0 +1,150 @@
+/* Three short chapters between the two hero sections. They alternate
+   sides so the eye zig-zags down rather than scanning one column, and
+   they sit close together — the pacing is the point. */
+.showcase {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* The rooms alternate sides but still share most of the page's width, so
+   letting each one's feathered top ride up into the one above turns three
+   stacked shots into a single space the visitor moves down through. Kept
+   small on purpose: a masked-out canvas still takes pointer events, and a
+   deep overlap would put a dead strip over the room above. */
+.chapter + .chapter {
+  margin-top: clamp(-2.5rem, -2.5vw, -1rem);
+}
+
+.chapter {
+  display: grid;
+  grid-template-columns: minmax(0, 19rem) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  max-width: var(--max-width);
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 var(--section-pad-x);
+  scroll-margin-top: 5rem;
+}
+
+/* The room takes the other side. Swapping grid columns rather than
+   reordering the DOM keeps the heading before its room for anyone
+   reading the page linearly. */
+.chapter--left {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 19rem);
+}
+
+.chapter--left .chapter__text {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.chapter--left .chapter__room {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.chapter__title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  color: var(--color-text);
+}
+
+/* The narrow text column can't always fit both on one line, so they wrap
+   rather than squeezing the button off the edge. */
+.chapter__meta {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.1rem;
+  margin-top: 0.4rem;
+}
+
+.chapter__count {
+  font-size: 0.72rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+.chapter__intro {
+  margin-top: 0.85rem;
+  font-size: 0.84rem;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--color-text-faint);
+  text-wrap: pretty;
+}
+
+/* The credit card lives in the text column here rather than under the
+   room, so it reads as part of the same block and nothing shifts when a
+   piece is hovered. */
+.chapter__text .show-info {
+  justify-content: flex-start;
+  min-height: 6.5rem;
+  margin-top: 1rem;
+  padding: 0;
+}
+
+.chapter__text .show-info__card {
+  max-width: 100%;
+}
+
+.chapter__room {
+  min-width: 0;
+}
+
+/* Each room has to end in black on every side, or three lit rectangles
+   sit on the page and the illusion of one continuous space goes with
+   them. The mask feathers the canvas out so the room simply stops being
+   lit rather than stopping at an edge.
+
+   The falloff is long and stepped rather than a single ramp: a two-stop
+   gradient still has a readable ellipse where its slope changes, which
+   is exactly the hard-edged pool of light this is meant to remove. Four
+   stops with no straight run between them leaves nothing to read. */
+.chapter__room .scene-canvas {
+  --room-fade: radial-gradient(
+    ellipse 82% 88% at 50% 50%,
+    #000 0%,
+    rgba(0, 0, 0, 0.94) 30%,
+    rgba(0, 0, 0, 0.68) 54%,
+    rgba(0, 0, 0, 0.3) 76%,
+    rgba(0, 0, 0, 0.08) 90%,
+    transparent 100%
+  );
+  -webkit-mask-image: var(--room-fade);
+  mask-image: var(--room-fade);
+}
+
+/* The shared top/bottom fades belong to full-width environments; inside
+   a chapter the mask above already does that job on all four sides. */
+.chapter__room .scene-canvas::before,
+.chapter__room .scene-canvas::after {
+  content: none;
+}
+
+/* Stack on narrow screens: heading, then its room, then the next. */
+@media (max-width: 900px) {
+  .chapter,
+  .chapter--left {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  /* Stacked, the next thing under a room is its neighbour's *heading* —
+     pulling that up would run type over the picture. */
+  .chapter + .chapter {
+    margin-top: 1.5rem;
+  }
+
+  .chapter--left .chapter__text,
+  .chapter--left .chapter__room {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .chapter__text .show-info {
+    min-height: 0;
+  }
+}

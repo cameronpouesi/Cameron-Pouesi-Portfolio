@@ -1,0 +1,38 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ---------------------------------------------------------------------
+# Large media, deliberately kept out of the repo
+# ---------------------------------------------------------------------
+# The untouched camera/export originals. 2.6GB, and eight of them are
+# over GitHub's hard 100MB per-file limit, so they cannot be pushed at
+# all. These are the source copies — keep them backed up off-git.
+Media Masters/
+
+# The compressed web previews the site plays. 880MB: it would push, but
+# it would put the repo near GitHub's 1GB soft limit and make every
+# clone enormous. Host these on object storage/CDN and point the site at
+# them. The art masters in art-masters/ *are* tracked — they're 54MB.
+public/video/

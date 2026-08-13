@@ -1,0 +1,44 @@
+.scene-canvas {
+  position: relative;
+  width: 100%;
+  height: var(--scene-height, 90vh);
+  cursor: default;
+}
+
+.scene-canvas canvas {
+  display: block;
+  outline: none;
+}
+
+/* Each room dissolves into the page at its top and bottom edge instead
+   of stopping at a hard line. Walking down the site then reads as the
+   light changing rather than one panel ending and another starting. */
+.scene-canvas::before,
+.scene-canvas::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 16%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.scene-canvas::before {
+  top: 0;
+  background: linear-gradient(to bottom, #000, transparent);
+}
+
+.scene-canvas::after {
+  bottom: 0;
+  background: linear-gradient(to top, #000, transparent);
+}
+
+/* On tall, narrow screens a full-height canvas leaves the set stranded
+   in the middle of a lot of empty room. Capping the height keeps the
+   frame closer to the set's own proportions. */
+@media (max-width: 760px) {
+  .scene-canvas {
+    height: min(var(--scene-height, 90vh), 62vh);
+  }
+}

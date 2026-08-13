@@ -1,0 +1,63 @@
+/* A quiet beat between the reel and the work. The whitespace does the
+   work here, not the type — this is an introduction, not a statement
+   piece, and the environments below are what should hold attention. */
+/* An introduction, not a chapter. Short enough that the visitor reads it
+   on the way past rather than scrolling through it. */
+.intro {
+  position: relative;
+  padding: clamp(3rem, 6vw, 4.75rem) var(--section-pad-x);
+  background: var(--color-bg);
+}
+
+.intro__inner {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.intro__name {
+  margin-bottom: 1.5rem;
+  font-size: clamp(1.6rem, 3.4vw, 2.35rem);
+  line-height: 1.1;
+  color: var(--color-text);
+}
+
+/* The role sits under the name at the weight of a caption, so the block
+   reads as one signature rather than two competing headings. */
+.intro__role {
+  display: block;
+  margin-top: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+.intro__statement + .intro__statement {
+  margin-top: 1.35rem;
+}
+
+/* Small, light, and given room to breathe. ~68 characters a line, which
+   is where long-form text stops being work to read. */
+.intro__statement {
+  font-size: 0.98rem;
+  font-weight: 300;
+  line-height: 2;
+  letter-spacing: 0.005em;
+  color: var(--color-text-dim);
+  text-wrap: pretty;
+}
+
+@media (max-width: 760px) {
+  .intro {
+    padding: clamp(4.5rem, 13vw, 8rem) var(--section-pad-x);
+  }
+
+  .intro__statement {
+    font-size: 0.94rem;
+    line-height: 1.9;
+  }
+}

@@ -1,0 +1,155 @@
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 560px;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #050505;
+}
+
+.hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  /* Cinematic fallback gradient shows behind/before the video loads,
+     and remains visible through the scrim so the section never looks
+     empty if reel-bg.mp4 hasn't been added yet. */
+  background:
+    radial-gradient(120% 90% at 50% 20%, #1c1c1c 0%, #0a0a0a 55%, #050505 100%);
+}
+
+.hero__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.4s var(--ease-out);
+}
+
+.hero__video.is-ready {
+  opacity: 1;
+}
+
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(5, 5, 5, 0.55) 0%,
+    rgba(5, 5, 5, 0.35) 35%,
+    rgba(5, 5, 5, 0.55) 70%,
+    rgba(5, 5, 5, 0.92) 100%
+  );
+}
+
+.hero__vignette {
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 18vw 2vw rgba(0, 0, 0, 0.65);
+  pointer-events: none;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 1.5rem;
+  max-width: 900px;
+}
+
+.hero__eyebrow {
+  margin-bottom: 1.5rem;
+  color: rgba(242, 240, 236, 0.7);
+}
+
+.hero__name {
+  font-size: clamp(2.75rem, 9vw, 6.5rem);
+  color: var(--color-text);
+  font-weight: 400;
+  letter-spacing: 0.015em;
+}
+
+.hero__tagline {
+  margin-top: 1.5rem;
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  font-weight: 300;
+  color: var(--color-text-dim);
+  letter-spacing: 0.01em;
+}
+
+.hero__scroll-cue {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(1.75rem, 4vh, 3rem);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  transform: translateX(-50%);
+}
+
+.hero__scroll-line {
+  width: 1px;
+  height: 42px;
+  background: linear-gradient(
+    180deg,
+    rgba(242, 240, 236, 0) 0%,
+    rgba(242, 240, 236, 0.8) 50%,
+    rgba(242, 240, 236, 0) 100%
+  );
+  animation: scrollPulse 2.2s var(--ease-in-out) infinite;
+}
+
+.hero__scroll-label {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+@keyframes scrollPulse {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+    opacity: 0;
+  }
+  40% {
+    transform: scaleY(1);
+    transform-origin: top;
+    opacity: 1;
+  }
+  60% {
+    transform: scaleY(1);
+    transform-origin: bottom;
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+    opacity: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero__vignette {
+    box-shadow: inset 0 0 24vw 4vw rgba(0, 0, 0, 0.65);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__scroll-line {
+    animation: none;
+    transform: scaleY(1);
+    opacity: 0.6;
+  }
+}

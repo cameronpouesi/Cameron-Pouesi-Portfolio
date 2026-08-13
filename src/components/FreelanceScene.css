@@ -1,0 +1,103 @@
+/* Held to the same measure as every other section, so the desk lines up
+   with the environments above it rather than floating at its own width. */
+.freelance-scene .scene-rail {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--section-pad-x);
+}
+
+/* The heading owns the space above the scene outright. A negative pull
+   used to close the gap under it, which put the plate's box — and the
+   glow's, which reaches further still — over the description. Nothing
+   overlaps now, and the header is given a layer of its own so that a
+   later change to this scene's height cannot put it back. */
+#freelance .category-section__header {
+  position: relative;
+  z-index: 2;
+}
+
+.suite {
+  position: relative;
+  /* Wider than the other environments' measure because the artwork is
+     inset to 88% inside its own frame — the extra width buys back the
+     black margin so the desk still reads at the same size on screen. */
+  width: min(100%, 70rem);
+  margin: 0 auto;
+}
+
+.suite__frame {
+  position: relative;
+  width: 100%;
+}
+
+/* Same mechanism as the other environments: the plate is photographed
+   against true black and screened on, so it has no boundary to see.
+   Deliberately unmasked.
+
+   Every previous version of this rule carried a CSS fade, and the hard
+   edge kept coming back because a fade cannot fix what was wrong. The
+   old plate's picture ran to its own border and stopped dead: sampling
+   it found the outermost columns jumping from 0 to 85, and the bottom
+   row from 0 to 164 out of 255. A mask ramp only reaches zero somewhere,
+   and wherever that somewhere was, it was drawing a cliff at partial
+   opacity and then cutting it — a line. Making the ramp longer moved the
+   line and ate the picture.
+
+   So the falloff is baked into the artwork instead. The desk is inset to
+   92% of the frame, which buys a band of real black around it, and the
+   edges are multiplied down by a smoothstep so the picture arrives at
+   the border already black rather than being clipped there. Measured on
+   the finished file, the outer 3% on all four sides is 0/255, and the
+   largest single-pixel step along any border scanline is 4. There is
+   nothing left for a mask to hide, and nothing left
+   to regress: the edge is a property of the image now, not of a rule
+   that the next layout change can knock over. */
+.suite__plate {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: screen;
+}
+
+/* Spreads sideways and down past the frame, never up: the description
+   sits directly above, and a screened warm gradient reaching into it
+   washes the text out even though the plate itself is black there. */
+.suite__glow {
+  position: absolute;
+  inset: 0 -10% -10%;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* Each panel is a window onto the work.
+   Laid out at the full size of the plate and then mapped onto its
+   monitor's four corners, so the work is composed in 16:9 and the
+   matrix supplies the angle. `overflow: hidden` clips in the element's
+   own space, which after the transform is the screen itself — so the
+   work is cut by the glass, not by a rectangle drawn over it. */
+.suite__screen {
+  position: absolute;
+  inset: 0;
+  transform-origin: 0 0;
+  overflow: hidden;
+}
+
+.suite__slot {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+.freelance-scene .show-info {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--section-pad-x);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .suite__slot {
+    will-change: auto;
+  }
+}

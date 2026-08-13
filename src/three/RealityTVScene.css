@@ -1,0 +1,42 @@
+.reality-tv-scene {
+  position: relative;
+  width: 100%;
+}
+
+/* Credit and toggle sit under the environment, in that order, so
+   neither ever covers a screen. The scene's own height leaves room for
+   this strip — see the `height` passed to SceneCanvas. */
+.reality-tv-scene__footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.reality-tv-scene__toggle {
+  padding: 0.9rem 1.75rem;
+  border: 1px solid var(--color-line-strong);
+  border-radius: 999px;
+  background: rgba(8, 8, 8, 0.62);
+  backdrop-filter: blur(8px);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  white-space: nowrap;
+  transition: background 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
+}
+
+.reality-tv-scene__toggle:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--color-text-dim);
+}
+
+@media (max-width: 640px) {
+  .reality-tv-scene__toggle {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.68rem;
+  }
+}

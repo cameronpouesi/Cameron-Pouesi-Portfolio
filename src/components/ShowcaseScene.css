@@ -1,0 +1,131 @@
+/* Three chapters of one continuous space, held to the same measure as
+   every other section on the page. The environments alternate sides; the
+   headings never do — a title that moves around is the thing that made
+   this section read as a different site from the one above it. */
+.showcase {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--section-pad-x);
+}
+
+/* The scene takes the larger share of the row. The credit only ever
+   holds four short lines, and giving it half the width was costing the
+   work the presence it should have. */
+.chapter {
+  display: grid;
+  column-gap: clamp(1.25rem, 2.5vw, 2.5rem);
+  align-items: center;
+  scroll-margin-top: 5rem;
+}
+
+.chapter--right {
+  grid-template-columns: minmax(0, 36fr) minmax(0, 64fr);
+}
+
+.chapter--left {
+  grid-template-columns: minmax(0, 64fr) minmax(0, 36fr);
+}
+
+/* Tight. Three short chapters that belong together should read as one
+   block, not as three sections that happen to be adjacent. */
+.chapter + .chapter {
+  margin-top: clamp(0.5rem, 1.2vw, 1.25rem);
+}
+
+/* The heading spans the grid so it starts at the column's left edge,
+   which is where every other section title on the page starts. */
+.chapter__head {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  max-width: 46ch;
+  margin-bottom: clamp(0.35rem, 0.8vw, 0.7rem);
+}
+
+.chapter__room {
+  grid-row: 2;
+  min-width: 0;
+}
+
+.chapter__card {
+  grid-row: 2;
+  min-width: 0;
+}
+
+.chapter--right .chapter__room {
+  grid-column: 2;
+}
+
+.chapter--right .chapter__card {
+  grid-column: 1;
+}
+
+.chapter--left .chapter__room {
+  grid-column: 1;
+}
+
+.chapter--left .chapter__card {
+  grid-column: 2;
+}
+
+.chapter__title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  color: var(--color-text);
+}
+
+.chapter__meta {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.1rem;
+  margin-top: 0.4rem;
+}
+
+.chapter__count {
+  font-size: 0.72rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+.chapter__intro {
+  margin-top: 0.7rem;
+  font-size: 0.84rem;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--color-text-faint);
+  text-wrap: pretty;
+}
+
+/* The credit sits in the empty column beside the scene, where it has
+   room and where nothing shifts when a piece is hovered. */
+.chapter__card .show-info {
+  justify-content: flex-start;
+  min-height: 11.5rem;
+  padding: 0;
+}
+
+.chapter__card .show-info__card {
+  max-width: 100%;
+}
+
+@media (max-width: 900px) {
+  .chapter {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .chapter__head,
+  .chapter__room,
+  .chapter__card {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .chapter__head {
+    max-width: none;
+  }
+
+  .chapter__card .show-info {
+    min-height: 0;
+    margin-top: 0.5rem;
+  }
+}

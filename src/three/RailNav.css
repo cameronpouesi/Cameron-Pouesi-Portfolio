@@ -1,0 +1,101 @@
+/* The arrows are absolutely positioned, so their scene has to be the
+   containing block. Without this they escape to whatever ancestor
+   happens to be positioned and end up floating over a different room. */
+.scene-rail {
+  position: relative;
+}
+
+/* Deliberately quiet until you go looking for them — the room should be
+   the thing on screen, not a pair of carousel buttons. */
+.rail-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid var(--color-line);
+  border-radius: 50%;
+  background: rgba(8, 8, 10, 0.5);
+  backdrop-filter: blur(10px);
+  color: var(--color-text-dim);
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 0.35s var(--ease-out), background 0.35s var(--ease-out),
+    border-color 0.35s var(--ease-out), transform 0.35s var(--ease-out);
+}
+
+.scene-rail:hover .rail-nav {
+  opacity: 1;
+}
+
+.rail-nav svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.rail-nav:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: var(--color-text-faint);
+  color: var(--color-text);
+}
+
+.rail-nav:disabled {
+  opacity: 0.16;
+  cursor: default;
+}
+
+.rail-nav--prev {
+  left: clamp(0.75rem, 3vw, 2.5rem);
+}
+
+.rail-nav--prev:hover:not(:disabled) {
+  transform: translateY(-50%) translateX(-3px);
+}
+
+.rail-nav--next {
+  right: clamp(0.75rem, 3vw, 2.5rem);
+}
+
+.rail-nav--next:hover:not(:disabled) {
+  transform: translateY(-50%) translateX(3px);
+}
+
+.rail-progress {
+  position: absolute;
+  left: 50%;
+  bottom: 1.5rem;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  gap: 0.4rem;
+  pointer-events: none;
+}
+
+.rail-progress span {
+  width: 1.35rem;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  transition: background 0.4s var(--ease-out);
+}
+
+.rail-progress span.is-active {
+  background: rgba(255, 255, 255, 0.62);
+}
+
+@media (max-width: 640px) {
+  .rail-nav {
+    width: 2.5rem;
+    height: 2.5rem;
+    opacity: 1;
+  }
+}

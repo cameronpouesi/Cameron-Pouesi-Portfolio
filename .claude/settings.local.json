@@ -1,0 +1,73 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create *)",
+      "Bash(npm install *)",
+      "Bash(rm -f src/App.css src/assets/react.svg public/icons.svg)",
+      "Bash(rmdir src/assets)",
+      "Bash(npm run *)",
+      "Bash(mkdir -p .claude)",
+      "Bash(ls .claude/launch.json)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(node scripts/process-thumbnails.mjs)",
+      "Bash(choco --version)",
+      "Bash(winget --version)",
+      "Bash(choco install *)",
+      "Bash(ffmpeg -version)",
+      "Read(//c/ProgramData/chocolatey/**)",
+      "Read(//c//**)",
+      "Read(//c/ProgramData/chocolatey/lib/**)",
+      "Bash(winget install *)",
+      "Bash(/c/Users/User/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.1.2-full_build/bin/ffmpeg.exe -version)",
+      "Bash(rm -rf scripts)",
+      "Bash(npm uninstall *)",
+      "Bash(/c/Users/User/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.1.2-full_build/bin/ffmpeg.exe -hide_banner -encoders)",
+      "Bash(bash scripts/compress-videos.sh)",
+      "Bash(mv \"clips/clips_compressed/reel-bg.mp4\" \"reel-bg.mp4\")",
+      "Bash(mv \"clips/clips_compressed/celebrity-treasure-island.mp4\" \"clips/celebrity-treasure-island.mp4\")",
+      "Bash(mv \"clips/clips_compressed/glow-up-nz.mp4\" \"clips/glow-up-nz.mp4\")",
+      "Bash(mv \"clips/clips_compressed/match-fit.mp4\" \"clips/match-fit.mp4\")",
+      "Bash(mv \"clips/clips_compressed/personal-projects-preview.mp4\" \"clips/personal-projects-preview.mp4\")",
+      "Bash(mv \"clips_compressed/reel-bg.mp4\" \"reel-bg.mp4\")",
+      "Bash(mv \"clips_compressed/celebrity-treasure-island.mp4\" \"clips/celebrity-treasure-island.mp4\")",
+      "Bash(mv \"clips_compressed/glow-up-nz.mp4\" \"clips/glow-up-nz.mp4\")",
+      "Bash(mv \"clips_compressed/match-fit.mp4\" \"clips/match-fit.mp4\")",
+      "Bash(mv \"clips_compressed/personal-projects-preview.mp4\" \"clips/personal-projects-preview.mp4\")",
+      "Bash(python check_rect.py silver-crown 23 31 36 51)",
+      "Bash(python check_rect.py silver-crown 20 20 37 55)",
+      "Bash(python check_rect.py vhs-tv 10 42 42 78)",
+      "Bash(python check_rect.py vhs-tv 9 27 57 80)",
+      "Bash(python check_rect.py vhs-tv 8 27 60 84)",
+      "Bash(python check_rect.py antenna-tv 35 32 55 45)",
+      "Bash(python check_rect.py antenna-tv 38 45 42 40)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ ! -f \"${CLAUDE_PROJECT_DIR}/.claude/skills/impeccable/scripts/hook.mjs\" ] || node \"${CLAUDE_PROJECT_DIR}/.claude/skills/impeccable/scripts/hook.mjs\"",
+            "timeout": 5,
+            "statusMessage": "Checking UI changes"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ ! -f \"${CLAUDE_PROJECT_DIR}/.claude/skills/impeccable/scripts/hook.mjs\" ] || node \"${CLAUDE_PROJECT_DIR}/.claude/skills/impeccable/scripts/hook.mjs\"",
+            "timeout": 30,
+            "statusMessage": "Design deep pass"
+          }
+        ]
+      }
+    ]
+  },
+  "description": "Impeccable design detector: immediate-tier checks after Edit/Write/MultiEdit on UI files, full-rule deep pass on Stop."
+}

@@ -1,0 +1,214 @@
+/* ==========================================================================
+   PHOTOGRAPHIC ENVIRONMENTS
+   --------------------------------------------------------------------------
+   Objects and light against black, not a photograph with a soft edge.
+   ========================================================================== */
+
+.stage {
+  position: relative;
+  margin-inline: auto;
+}
+
+.stage--inset {
+  width: 100%;
+}
+
+.stage--wide {
+  width: 100%;
+}
+
+.stage__frame {
+  position: relative;
+  width: 100%;
+}
+
+/* `screen` is the whole mechanism.
+   A black pixel contributes nothing under screen, so the plate simply
+   has no boundary — outside the lit objects nothing is drawn at all.
+   There is deliberately no mask here: feathering the edge of an opaque
+   rectangle only ever gave a softer rectangle, and you could still see
+   where the photograph stopped. This cannot show an edge, because there
+   is no edge to show. It also means overlapping scenes add their light
+   together instead of one blacking out the other. */
+.stage__plate {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: screen;
+  /* Bottom edge only. Three sides of every plate are already black and
+     need nothing; the floor a scene stands on runs to where the
+     photograph stops, and that one cut shows as a hard horizontal line.
+     `--plate-fade` lets a scene set its own falloff, because how far up
+     the frame the floor starts is a property of the photograph and not
+     something one shared value can be right about. */
+  --plate-fade: linear-gradient(to bottom, #000 90%, transparent 100%);
+  -webkit-mask-image: var(--plate-fade);
+  mask-image: var(--plate-fade);
+}
+
+/* The light in the room, arriving before the things it falls on. */
+.stage__glow {
+  position: absolute;
+  inset: -12%;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* Each piece gets its own layer so it can fade in on its own beat. The
+   layer matches the frame exactly, so the percentage coordinates inside
+   still resolve against the picture. */
+.stage__mount {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* ---- a piece of work, mounted ---- */
+
+.stage-piece {
+  position: absolute;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.stage-piece__art {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s var(--ease-out);
+}
+
+.stage-piece.is-hovered .stage-piece__art {
+  transform: scale(1.035);
+}
+
+.stage-piece img,
+.stage-piece__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.stage-piece__video {
+  opacity: 0;
+  animation: stage-piece-wake 0.6s var(--ease-out) 0.12s forwards;
+}
+
+@keyframes stage-piece-wake {
+  to {
+    opacity: 1;
+  }
+}
+
+.stage-piece:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 6px;
+}
+
+/* ---- mounts ---- */
+
+/* Pasted: one more sheet on a wall that has been glued over many times.
+   The shadow is tight and offset down with no spread — a sheet with
+   paste behind it sits *on* the wall, not in front of it. */
+.stage-piece--pasted .stage-piece__art {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.75),
+    0 8px 22px rgba(0, 0, 0, 0.6);
+  outline: 1px solid rgba(238, 232, 220, 0.16);
+  outline-offset: -1px;
+}
+
+.stage-piece--pasted.is-hovered .stage-piece__art {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.75),
+    0 12px 30px rgba(0, 0, 0, 0.7),
+    0 0 40px rgba(210, 224, 255, 0.14);
+}
+
+/* Framed: a lit panel floating in front of a dark stage. */
+.stage-piece--framed .stage-piece__art {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 18px 46px rgba(0, 0, 0, 0.8),
+    0 0 70px rgba(255, 176, 96, 0.06);
+}
+
+.stage-piece--framed.is-hovered .stage-piece__art {
+  box-shadow:
+    0 22px 54px rgba(0, 0, 0, 0.82),
+    0 0 96px rgba(255, 178, 96, 0.13);
+}
+
+/* Screen: the picture lands on the panel in the photograph and throws
+   its light back into the room. */
+.stage-piece--screen {
+  isolation: isolate;
+}
+
+.stage-piece--screen .stage-piece__art {
+  box-shadow: 0 0 48px 10px rgba(126, 168, 224, 0.14);
+}
+
+.stage-piece--screen.is-hovered .stage-piece__art {
+  transform: none; /* a set doesn't grow when you look at it */
+  box-shadow: 0 0 72px 18px rgba(140, 182, 236, 0.24);
+}
+
+.stage-piece--screen::after {
+  content: "";
+  position: absolute;
+  inset: -46% -28%;
+  background: radial-gradient(
+    ellipse at 50% 55%,
+    rgba(150, 185, 235, 0.13),
+    rgba(120, 150, 200, 0.04) 45%,
+    transparent 72%
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ---- the glued-over wall behind the advertising work ---- */
+
+/* Deliberately not clipped.
+   Clipping the paste-up to the frame put a hard rectangle back into a
+   scene whose whole point is not having one — worse than the soft edge
+   it replaced. The sheets run past the frame instead and are faded out
+   individually by how far they sit from the middle of the wall, so the
+   pile thins into black on its own terms and has no boundary at all. */
+.poster-wall {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.poster-wall__sheet {
+  position: absolute;
+  display: block;
+  object-fit: cover;
+  /* Knocked a long way back and desaturated: this is the wall, not the
+     work, and it must never compete with the four sheets that are
+     actually the section's projects. */
+  filter: grayscale(0.5) brightness(0.2) contrast(1.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage-piece__art {
+    transition: none;
+  }
+
+  .stage-piece__video {
+    animation: none;
+    opacity: 1;
+  }
+}

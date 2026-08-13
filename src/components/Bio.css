@@ -1,0 +1,159 @@
+.bio {
+  position: relative;
+  padding: var(--section-pad-y) var(--section-pad-x);
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-line);
+}
+
+.bio__grid {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.bio__portrait {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: #000;
+  margin: 0 auto;
+}
+
+/* Graded rather than dropped in.
+   The photograph was taken on a press wall — a brightly lit white
+   step-and-repeat — and on a page that is otherwise black it arrives as
+   a white rectangle. Pulling the exposure and saturation down puts it in
+   the same light as everything else on the site. */
+.bio__portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 22%;
+  filter: brightness(0.78) contrast(1.08) saturate(0.82);
+}
+
+/* Then the same thing every environment on this site does: the frame
+   stops being a rectangle. The corners fall away, the top darkens, and
+   the bottom dissolves into the page rather than ending on an edge. */
+.bio__portrait::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(10, 10, 10, 0.6) 0%,
+      rgba(10, 10, 10, 0) 20%,
+      rgba(10, 10, 10, 0) 52%,
+      rgba(10, 10, 10, 0.72) 84%,
+      #0a0a0a 100%
+    ),
+    radial-gradient(
+      118% 78% at 50% 34%,
+      rgba(10, 10, 10, 0) 32%,
+      rgba(10, 10, 10, 0.5) 72%,
+      rgba(10, 10, 10, 0.86) 100%
+    );
+}
+
+.bio__portrait-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 4rem;
+  letter-spacing: 0.05em;
+  color: var(--color-text-faint);
+  background: radial-gradient(120% 100% at 50% 20%, #1c1c1c 0%, #0d0d0d 100%);
+}
+
+.bio__content {
+  max-width: 60ch;
+}
+
+.bio__heading {
+  margin-top: 0.75rem;
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  color: var(--color-text);
+}
+
+.bio__text {
+  margin-top: 1.25rem;
+  color: var(--color-text-dim);
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.75;
+}
+
+.bio__lists {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  margin-top: 2.5rem;
+}
+
+.bio__list-title {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  margin-bottom: 0.75rem;
+}
+
+.bio__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.bio__list li {
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: var(--color-text-dim);
+}
+
+.bio__cv {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 2.5rem;
+  padding: 0.85rem 1.5rem;
+  border: 1px solid var(--color-line-strong);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  transition: background 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
+}
+
+.bio__cv svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.bio__cv:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--color-text-dim);
+}
+
+@media (min-width: 800px) {
+  .bio__grid {
+    grid-template-columns: 340px 1fr;
+    gap: 5rem;
+  }
+
+  .bio__portrait {
+    margin: 0;
+  }
+}

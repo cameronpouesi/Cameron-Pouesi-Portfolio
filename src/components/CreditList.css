@@ -1,0 +1,201 @@
+/* The button sits beside the project count and is meant to be found, not
+   noticed: same size and tracking as the count, one hairline underline so
+   it reads as a control rather than another label. */
+.credit-list__open {
+  appearance: none;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid var(--color-line-strong);
+  background: none;
+  font-family: inherit;
+  font-size: 0.72rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-text-faint);
+  cursor: pointer;
+  transition:
+    color 0.3s var(--ease-out),
+    border-color 0.3s var(--ease-out);
+}
+
+.credit-list__open:hover,
+.credit-list__open:focus-visible {
+  color: var(--color-text);
+  border-color: var(--color-text);
+}
+
+/* ---- the overlay ---- */
+.credit-list {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 5vw, 3.5rem);
+  background: rgba(4, 4, 4, 0.86);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.credit-list__panel {
+  display: flex;
+  flex-direction: column;
+  width: min(64rem, 100%);
+  max-height: 100%;
+  border: 1px solid var(--color-line);
+  background: var(--color-bg);
+}
+
+.credit-list__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border-bottom: 1px solid var(--color-line);
+}
+
+.credit-list__eyebrow {
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+.credit-list__title {
+  margin-top: 0.4rem;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  color: var(--color-text);
+}
+
+.credit-list__close {
+  appearance: none;
+  flex-shrink: 0;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--color-line-strong);
+  background: none;
+  font-family: inherit;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  cursor: pointer;
+  transition:
+    color 0.3s var(--ease-out),
+    border-color 0.3s var(--ease-out);
+}
+
+.credit-list__close:hover,
+.credit-list__close:focus-visible {
+  color: var(--color-text);
+  border-color: var(--color-text);
+}
+
+.credit-list__scroll {
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 0 clamp(1.25rem, 3vw, 2rem) clamp(1.25rem, 3vw, 2rem);
+}
+
+/* ---- the list itself ---- */
+.credit-list__table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.credit-list__table thead th {
+  position: sticky;
+  top: 0;
+  padding: 1rem 1rem 0.65rem 0;
+  border-bottom: 1px solid var(--color-line-strong);
+  background: var(--color-bg);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+.credit-list__table tbody th,
+.credit-list__table tbody td {
+  padding: 0.85rem 1rem 0.85rem 0;
+  border-bottom: 1px solid var(--color-line);
+  font-size: 0.86rem;
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--color-text-dim);
+  vertical-align: top;
+}
+
+/* The project name is the row's own heading, so it carries the weight. */
+.credit-list__table tbody th {
+  font-weight: 400;
+  color: var(--color-text);
+}
+
+.credit-list__season {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.11em;
+  color: var(--color-text-faint);
+}
+
+.credit-list__table tbody tr:last-child th,
+.credit-list__table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Below this a four-column table is unreadable, so each credit becomes
+   its own block with its labels inline. */
+@media (max-width: 720px) {
+  .credit-list__table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .credit-list__table,
+  .credit-list__table tbody,
+  .credit-list__table tr,
+  .credit-list__table th,
+  .credit-list__table td {
+    display: block;
+  }
+
+  .credit-list__table tr {
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .credit-list__table tbody th,
+  .credit-list__table tbody td {
+    padding: 0;
+    border-bottom: 0;
+  }
+
+  .credit-list__table tbody th {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .credit-list__table tbody td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+
+  .credit-list__table tbody td + td {
+    margin-top: 0.55rem;
+  }
+}

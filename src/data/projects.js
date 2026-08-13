@@ -102,6 +102,10 @@ export const CATEGORY_INTROS = {
     "Working with independent clients across music videos, successful YouTube channels and digital content, bringing a flexible editorial approach to a wide range of creative projects and formats.",
 };
 
+// Paths below stay as plain "/video/..." strings; media.js resolves them
+// to wherever the video is actually hosted.
+import { mediaUrl } from "./media";
+
 const PLACEHOLDER_DESCRIPTION =
   "Add a 1-2 sentence description of your work on this project.";
 
@@ -887,9 +891,13 @@ export const isPortrait = (project) => project?.orientation === "portrait";
 export const aspectFor = (project) =>
   isPortrait(project) ? PORTRAIT_ASPECT : LANDSCAPE_ASPECT;
 
+// Derived from the clip's own path — the swap happens while it is still
+// a plain path, then the result is resolved to wherever the video is
+// hosted. Doing it in that order is what keeps the rule readable: the
+// preview of a clip is the same filename in the previews folder.
 export const previewSrcFor = (project) =>
   project?.video?.type === "local"
-    ? project.video.src.replace("/video/clips/", "/video/previews/")
+    ? mediaUrl(project.video.src.replace("/video/clips/", "/video/previews/"))
     : null;
 
 /** True when a description is still the boilerplate, so UI can hide it

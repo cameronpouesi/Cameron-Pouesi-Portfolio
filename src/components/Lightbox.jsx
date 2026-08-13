@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { hasRealDescription } from "../data/projects";
+import { mediaUrl } from "../data/media";
 import "./Lightbox.css";
 
 /**
@@ -51,7 +52,7 @@ export default function Lightbox({ project, onClose }) {
               {project.video?.type === "local" ? (
                 <video
                   className="lightbox__video"
-                  src={project.video.src}
+                  src={mediaUrl(project.video.src)}
                   poster={project.thumbnail}
                   controls
                   autoPlay

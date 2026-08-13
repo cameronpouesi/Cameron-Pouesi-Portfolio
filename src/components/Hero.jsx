@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import { mediaUrl } from "../data/media";
 import "./Hero.css";
 
-const REEL_SRC = "/video/reel-bg.mp4";
+const REEL_SRC = mediaUrl("/video/reel-bg.mp4");
 
 export default function Hero() {
   const sectionRef = useRef(null);

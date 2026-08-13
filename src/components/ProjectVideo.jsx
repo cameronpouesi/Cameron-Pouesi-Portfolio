@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { mediaUrl } from "../data/media";
 import "./ProjectVideo.css";
 
 /**
@@ -46,7 +47,7 @@ export default function ProjectVideo({
         <video
           ref={videoRef}
           className="project-video__el"
-          src={video.src}
+          src={mediaUrl(video.src)}
           poster={thumbnail}
           muted
           loop

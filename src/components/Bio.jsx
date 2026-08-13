@@ -87,12 +87,12 @@ export default function Bio() {
             </div>
           </div>
 
-          {/* Points at the file that is actually in /public/cv. The name
-              carries spaces, so it is percent-encoded rather than
-              renamed — the PDF is Cameron's, not ours to relabel. */}
+          {/* Points at the file that is actually in /public/cv. Update
+              both together: this is the only reference to it, so a
+              renamed PDF breaks the button and nothing else complains. */}
           <a
             className="bio__cv"
-            href="/cv/Cameron_Pouesi_Offline_Editor%20CV%202026.pdf"
+            href="/cv/Cameron_Pouesi_CV_2026.pdf"
             download
           >
             Download CV

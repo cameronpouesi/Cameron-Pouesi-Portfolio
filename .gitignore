@@ -36,3 +36,11 @@ Media Masters/
 # clone enormous. Host these on object storage/CDN and point the site at
 # them. The art masters in art-masters/ *are* tracked — they're 54MB.
 public/video/
+
+# Claude Code's local tool and session state — not site content, and it
+# changes often enough to be noise in every diff. Kept on disk, out of
+# the repo. Note this takes .claude/launch.json with it: that's the dev
+# server config for the preview tool, and it is recreated locally rather
+# than shared.
+.claude/
+.impeccable/

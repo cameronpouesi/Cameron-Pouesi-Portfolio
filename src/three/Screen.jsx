@@ -184,7 +184,7 @@ export default function Screen({
     // Sound follows the cursor, never autoplay. A screen that starts on
     // its own stays silent until it's actually pointed at, and a project
     // flagged silent never speaks at all.
-    if (hovered && !project.silentPreview) claimAudio(v, owner);
+    if (hovered && !project.silent) claimAudio(v, owner);
 
     // Leaving hands the sound to whatever is hovered next; the picture
     // keeps running.
@@ -196,7 +196,7 @@ export default function Screen({
       v.removeEventListener("emptied", showArtwork);
       releaseAudio(v);
     };
-  }, [hovered, autoPlay, previewSrc, owner, project.silentPreview]);
+  }, [hovered, autoPlay, previewSrc, owner, project.silent]);
 
   // Teardown, and *only* teardown — no destruction.
   //

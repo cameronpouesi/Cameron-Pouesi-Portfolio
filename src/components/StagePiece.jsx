@@ -78,10 +78,10 @@ export default function StagePiece({
   useEffect(() => {
     const v = videoRef.current;
     if (!woken || !v) return undefined;
-    if (hovered && !project.silentPreview) claimAudio(v, owner);
+    if (hovered && !project.silent) claimAudio(v, owner);
     else releaseAudio(v);
     return undefined;
-  }, [hovered, woken, owner, project.silentPreview]);
+  }, [hovered, woken, owner, project.silent]);
 
   // Three ways a piece can be sized: filling whatever slot it has been
   // dropped into (a monitor on a carousel), by an explicit rectangle (a

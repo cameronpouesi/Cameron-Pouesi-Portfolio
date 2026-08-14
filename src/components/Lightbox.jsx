@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { hasRealDescription } from "../data/projects";
 import { mediaUrl } from "../data/media";
@@ -9,8 +9,30 @@ import "./Lightbox.css";
  * native controls and sound, or a privacy-enhanced YouTube embed
  * (youtube-nocookie.com) with autoplay, once a project is passed in.
  * Pass `project={null}` to keep it mounted-but-closed.
+ *
+ * A project marked `silent` opens muted — see the field guide in
+ * projects.js for when that applies.
  */
 export default function Lightbox({ project, onClose }) {
+  const videoRef = useRef(null);
+
+  /**
+   * Muting has to be done to the element, not in the markup.
+   *
+   * React does not reflect a `muted` prop onto the DOM property with any
+   * reliability — it sets the attribute, which only supplies the initial
+   * value and is ignored once the element exists. A video that opens
+   * with sound when it was asked to be silent is the kind of bug you
+   * only find by listening for it, so it is set here and asserted on
+   * every open.
+   */
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = Boolean(project?.silent);
+    if (project?.silent) v.volume = 0;
+  }, [project]);
+
   useEffect(() => {
     if (!project) return;
 
@@ -51,6 +73,7 @@ export default function Lightbox({ project, onClose }) {
             <div className="lightbox__media">
               {project.video?.type === "local" ? (
                 <video
+                  ref={videoRef}
                   className="lightbox__video"
                   src={mediaUrl(project.video.src)}
                   poster={project.thumbnail}
@@ -93,6 +116,18 @@ export default function Lightbox({ project, onClose }) {
                   worse than no field. */}
               {hasRealDescription(project) && (
                 <p className="lightbox__description">{project.description}</p>
+              )}
+
+              {/* The same badge the hover card carries. It was only ever
+                  on hover, which meant the one number a viewer most wants
+                  — the view count on the VLDL pieces — disappeared the
+                  moment they opened the thing to watch it. Any project
+                  with a tag shows it here; VLDL is just where it was
+                  most obviously missing. */}
+              {project.prestigeTag && (
+                <span className="lightbox__tagrow">
+                  <span className="lightbox__tag">{project.prestigeTag}</span>
+                </span>
               )}
 
               {project.channels?.length > 0 && (

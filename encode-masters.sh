@@ -32,6 +32,9 @@ declare -A MAP=(
   ["Documentary_Game On.mp4"]="game-on"
   ["Documentary_Homes in the Wild.mp4"]="george-clarke-homes-in-the-wild"
   ["Documentary_Māori All Blacks Bound By Blood v2.mp4"]="maori-all-blacks-bound-by-blood"
+  # v2 replaced the original, which was one of the CRF 30 / 960px batch
+  # this script exists to get away from.
+  ["Documentary_Sneakerholics v2.mp4"]="sneakerholics"
   ["Comedy_Taskmaster Australia Video Preview.mp4"]="taskmaster-australia"
   ["Childrens TV_Sticky TV - Pickled Possum Productions.mp4"]="sticky-tv"
   ["Advertising_AON x Surf Lifesaving NZ - Corner Store - Video Preview.mp4"]="aon-x-surf-life-saving"

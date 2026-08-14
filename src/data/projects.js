@@ -27,6 +27,13 @@
 //                keep it out of the environment. For work with no
 //                artwork yet: a card with no picture is a hole in the
 //                room, but the credit still belongs on the site.
+//   silent       optional. true = this project's audio never plays: not
+//                on hover in a room, and not when it is opened full
+//                screen. For material that can't be broadcast with its
+//                sound. Note the full-screen player still has native
+//                controls, so a viewer can unmute; if the audio must be
+//                impossible rather than merely off, strip the track from
+//                the file itself with ffmpeg -an.
 //   prestigeTag  optional. One short badge — GLOBAL FORMAT,
 //                INTERNATIONAL SERIES, NZ ORIGINAL, or a view count such
 //                as "2.4M+ VIEWS". Only where it is factually true of
@@ -67,10 +74,9 @@
 //   artwork on the screen and play in full when clicked.
 //
 // TODO (Cameron):
-//   - Jess B — What You Know Bout Me has no clip yet, and its company
-//     is still unconfirmed.
-//   - You Got This has no artwork yet, so it is creditOnly. Its category
-//     is inferred as Children's TV — confirm when you get a chance.
+//   - Jess B — What You Know Bout Me has no clip yet. Its company is
+//     deliberately null: it was a freelance job with none attached, and
+//     the credit list prints an em dash for that.
 //   - Māori All Blacks: Bound by Blood came through as the full 26-minute
 //     programme. Fine for the click-through, but send a short cut if
 //     you'd rather not host the whole thing.
@@ -353,8 +359,8 @@ export const projects = [
       "A reality gaming competition where young gamers teach their mums to play before putting them to the ultimate test in gaming and physical challenges.",
     thumbnail: "/images/thumbnails/ready-gamer-mum.jpg",
     video: { type: "local", src: "/video/clips/ready-gamer-mum.mp4", youtubeId: null },
-    // Its preview carries audio that should not play on the wall.
-    silentPreview: true,
+    // Carries audio that must not play, anywhere.
+    silent: true,
     featured: false,
   },
   {
